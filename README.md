@@ -72,6 +72,11 @@ npx next start -p 3100 & node scripts/verify-routes.mjs --base http://localhost:
 Images: files in `src/assets/images/{site,home}` are imported statically through `src/data/generated/imageFiles.ts`
 (fingerprinted under `/_next/static/media/`). After adding an image, run `node scripts/build-image-imports.mjs`.
 
+Coming Soon poster: replace `brand-assets/posters/coming-soon-westmont.png` (keep the text column left of x = 1150).
+`npm run build` regenerates the served WebPs first (`prebuild` → `scripts/build-poster-images.mjs`, skipped when the
+PNG's SHA-256 matches `src/data/generated/posterMediaManifest.ts`). Commit the regenerated files with the PNG. If the
+poster's words change, update the alt text and the mobile slide's copy in `src/views/HomePage.tsx`.
+
 Hosting: the site needs a Node.js runtime (`next start`) or a platform that runs Next.js, because of the redirects,
 the 404 handling in `src/proxy.ts` and the security headers. The old GoDaddy/Apache static upload (`.htaccess`) does not
 apply to this build. Project conventions from the Vite project's `CLAUDE.md` (content sources, accessibility,

@@ -88,7 +88,7 @@ export default function HomePage() {
                 <Photo
                   image={media(
                     'coming-soon-westmont-poster',
-                    'Stride Physical Therapy & Wellness. Your next chapter in movement. Coming Soon to Westmont. Care that starts with you.',
+                    'Stride Physical Therapy. Your next chapter in movement. Coming Soon to Westmont. Care that starts with you.',
                   )}
                   className={styles.posterImage}
                   sizes="100vw"
@@ -98,7 +98,8 @@ export default function HomePage() {
                 <div className={styles.posterMobile}>
                   <Photo image={media('coming-soon-westmont-photo', '')} className={styles.posterPhoto} sizes="100vw" />
                   <div className={`container ${styles.posterCopy}`}>
-                    <p className={styles.posterEyebrow}>{site.name}</p>
+                    {/* The poster's own wording (brand-assets/posters/coming-soon-westmont.png), not site.name. */}
+                    <p className={styles.posterEyebrow}>Stride Physical Therapy</p>
                     <p className={styles.posterTitle}>Your next chapter in movement.</p>
                     <p className={styles.posterSoon}>Coming Soon to Westmont</p>
                     <p className={styles.posterTagline}>Care that starts with you.</p>
