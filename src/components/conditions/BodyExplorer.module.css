@@ -1,0 +1,239 @@
+.explorer {
+  width: 100%;
+  max-width: 38.75rem;
+  justify-self: end;
+  padding: 1.5rem;
+  border: 1px solid #d7ded4;
+  border-radius: 22px;
+  background: #eff0e8;
+  color: var(--color-text-heading);
+}
+
+.toolsTitle {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #d1d9cf;
+  font-weight: 700;
+  font-size: var(--text-base);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+  padding-top: 1.1rem;
+}
+
+.figure {
+  position: relative;
+  overflow: hidden;
+  width: 190px;
+  height: 453px;
+  border-radius: 10px;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: var(--focus-x, 50%) var(--focus-y, 50%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stage {
+    transition:
+      transform 0.32s ease,
+      transform-origin 0.32s ease;
+  }
+
+  .hasFocus .stage {
+    transform: scale(1.16);
+  }
+
+  .focus-region {
+    transition: opacity 0.25s ease;
+  }
+
+  .hotspot span {
+    transition:
+      box-shadow 0.2s,
+      background 0.2s;
+  }
+}
+
+.anatomy-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 11px rgb(0 63 73 / 8%));
+}
+
+/* Front view: the back-only muscles and dot stay hidden, as in the package. */
+.back-anatomy {
+  display: none;
+}
+
+.focus-region {
+  fill: #cf8b5b;
+  opacity: 0;
+}
+
+.figure[data-selected='headaches'] .focus-head,
+.figure[data-selected='neck-pain'] .focus-neck,
+.figure[data-selected='shoulder-pain'] .focus-shoulder,
+.figure[data-selected='elbow-wrist-hand-pain'] .focus-arm,
+.figure[data-selected='back-pain-sciatica'] .focus-back,
+.figure[data-selected='hip-pain'] .focus-hip,
+.figure[data-selected='knee-pain'] .focus-knee,
+.figure[data-selected='foot-ankle-pain'] .focus-foot {
+  opacity: 0.72;
+}
+
+.figure[data-selected='neck-pain'] .muscle-anatomy .zone-neck,
+.figure[data-selected='shoulder-pain'] .muscle-anatomy .zone-shoulder,
+.figure[data-selected='elbow-wrist-hand-pain'] .muscle-anatomy .zone-arm,
+.figure[data-selected='hip-pain'] .muscle-anatomy .zone-hip {
+  fill: #ad6039;
+  stroke: #f1c7a4;
+}
+
+.hotspot {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.backOnly {
+  display: none;
+}
+
+.hotspot span {
+  display: block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff8e8;
+  border-radius: 50%;
+  background: var(--color-surface-dark);
+  box-shadow: 0 0 0 4px rgb(0 63 73 / 13%);
+}
+
+.hotspot:hover span,
+.hotspot[data-pressed='true'] span {
+  background: var(--color-action-clay);
+  box-shadow: 0 0 0 7px rgb(173 96 57 / 19%);
+}
+
+.hint {
+  margin-bottom: 0.75rem;
+  color: var(--color-text-body);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.regionList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.regionList button {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-heading);
+  font-size: var(--text-sm);
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.regionList button:hover {
+  background: #e4e6da;
+}
+
+.regionList button[aria-pressed='true'] {
+  border-color: #c5d0c4;
+  background: var(--palette-white);
+  box-shadow: inset 3px 0 var(--color-action-clay);
+  font-weight: 700;
+}
+
+.selection {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d0d7ca;
+}
+
+.selectionTitle {
+  margin-bottom: 0.5rem;
+  font-size: var(--text-lg);
+  line-height: 1.2;
+}
+
+.selection p {
+  margin-bottom: 0.75rem;
+  color: var(--color-text-body);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.selection a {
+  color: var(--color-action-link);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-underline-offset: 4px;
+}
+
+.caption {
+  margin-top: 0.9rem;
+  color: #5e7169;
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 640px) {
+  .explorer {
+    padding: 1.1rem;
+    border-radius: 16px;
+  }
+
+  .layout {
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 0.85rem;
+  }
+
+  .figure {
+    width: 130px;
+    height: 310px;
+  }
+
+  .hotspot {
+    width: 26px;
+    height: 26px;
+  }
+
+  .hotspot span {
+    width: 11px;
+    height: 11px;
+  }
+
+}
+
+/* The explorer is a light panel inside the dark hero: use the light-surface focus ring. */
+.explorer :focus-visible,
+.explorer button:focus-visible,
+.explorer a:focus-visible {
+  outline-color: var(--color-focus);
+}

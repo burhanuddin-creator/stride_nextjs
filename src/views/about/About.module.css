@@ -1,0 +1,238 @@
+.story {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 1rem + 4vw, 4.5rem);
+  align-items: start;
+}
+
+.storyTitle {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.storyCopy p {
+  color: var(--color-text-body);
+  font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
+  line-height: 1.85;
+}
+
+.storyCopy p + p {
+  margin-top: 1.25rem;
+}
+
+/* ---- Founding statement (sand, centered) ---- */
+.statement {
+  padding-block: clamp(3rem, 2rem + 3vw, 4.5rem);
+  background: var(--color-surface-sand-light);
+  text-align: center;
+}
+
+.statementInner {
+  max-width: 50rem;
+}
+
+.statement h2 {
+  font-size: clamp(1.9rem, 1.3rem + 2.4vw, 3rem);
+}
+
+.statement p:last-child {
+  max-width: 44rem;
+  margin: 1.4rem auto 0;
+  color: var(--color-text-body);
+  font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
+  line-height: 1.8;
+}
+
+/* ---- Portrait + intro ---- */
+.doctor {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 1rem + 4vw, 4.7rem);
+  align-items: center;
+}
+
+.portrait {
+  overflow: hidden;
+  height: clamp(26rem, 20rem + 10vw, 31.25rem);
+  border-radius: 18px;
+  background: #ece3d6;
+}
+
+.doctorName {
+  font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem);
+}
+
+.role {
+  margin-block: 0.75rem 1.5rem;
+  color: var(--color-text-accent);
+  font-size: var(--text-sm);
+}
+
+.doctorCopy > p:not(.role) {
+  color: var(--color-text-body);
+  line-height: 1.75;
+}
+
+.doctorCopy > p:not(.role) + p {
+  margin-top: 1rem;
+}
+
+.doctorAction {
+  margin-top: 1.75rem;
+}
+
+/* ---- Community ---- */
+.community {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 1rem + 5vw, 5.6rem);
+  align-items: center;
+}
+
+.communityTitle {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.communityCopy p {
+  margin-top: 1rem;
+  color: var(--color-text-body);
+  line-height: 1.75;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+.note {
+  padding: clamp(1.75rem, 1.2rem + 1.5vw, 2.2rem) clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-warm);
+  font-style: normal;
+}
+
+.wordmark {
+  margin-bottom: 0.75rem;
+  color: var(--color-text-heading);
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.25rem);
+  letter-spacing: 0.22em;
+  line-height: 1.2;
+}
+
+.rule {
+  width: 55px;
+  height: 2px;
+  margin-block: 1.5rem;
+  background: var(--color-action-clay);
+}
+
+.note p {
+  color: var(--color-text-body);
+  line-height: 1.7;
+}
+
+.note a {
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* ---- Meet Dr. Arva Gadly ---- */
+.approach {
+  padding-block: clamp(3rem, 2rem + 3vw, 4.75rem);
+  background: var(--color-surface-sand-light);
+}
+
+.approach h2,
+.sectionTitle {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.sectionHeading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(1.5rem, 1rem + 3vw, 4.4rem);
+  align-items: end;
+}
+
+.sectionHeading > p {
+  margin-bottom: 0.4rem;
+  color: var(--color-text-body);
+  line-height: 1.7;
+}
+
+.focusList {
+  margin-top: 2rem;
+  list-style: none;
+}
+
+.focusList li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) auto;
+  gap: 1rem 2rem;
+  align-items: center;
+  padding-block: 1.7rem;
+  border-top: 1px solid var(--color-divider);
+}
+
+.focusList li:last-child {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.focusList h3 {
+  font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+}
+
+.focusList p {
+  color: var(--color-text-body);
+}
+
+.focusList a {
+  color: var(--color-action-link);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+
+.backgroundTitle {
+  margin-bottom: 1.75rem;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.reading {
+  max-width: 46rem;
+}
+
+.reading p {
+  margin-block: 1rem 1.25rem;
+  color: var(--color-text-body);
+  line-height: 1.8;
+}
+
+@media (max-width: 899px) {
+  .story,
+  .doctor,
+  .community,
+  .sectionHeading {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portrait {
+    width: min(100%, 25rem);
+    height: 27rem;
+  }
+
+  .focusList li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .actions > a {
+    width: 100%;
+  }
+}

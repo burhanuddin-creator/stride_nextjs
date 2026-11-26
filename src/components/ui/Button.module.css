@@ -1,0 +1,110 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 52px;
+  padding: 0.75rem 1.6rem;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.sm {
+  min-height: 44px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.875rem;
+}
+
+.lg {
+  min-height: 56px;
+  padding: 0.85rem 2rem;
+  font-size: var(--text-base);
+}
+
+.full {
+  width: 100%;
+}
+
+.primary {
+  background: var(--color-action-primary);
+  color: var(--color-action-on-primary);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--color-action-primary-hover);
+}
+
+.outline {
+  background: var(--color-surface-card);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-heading);
+}
+
+.outline:hover {
+  background: var(--color-surface-tint-light);
+}
+
+.clay {
+  background: var(--color-action-clay);
+  color: var(--color-action-on-primary);
+}
+
+.clay:hover {
+  background: var(--color-action-clay-hover);
+}
+
+.light {
+  background: var(--palette-white);
+  color: var(--color-text-heading);
+}
+
+.light:hover {
+  background: var(--color-surface-parchment);
+}
+
+.ghost {
+  border-color: var(--color-text-on-dark);
+  background: transparent;
+  color: var(--color-text-on-dark);
+}
+
+.ghost:hover {
+  background: rgb(255 255 255 / 10%);
+}
+
+.arrow {
+  flex: none;
+  transition: transform var(--transition-fast);
+}
+
+.button:hover .arrow,
+.button:focus-visible .arrow {
+  transform: translateX(2px);
+}
+
+.leadingIcon {
+  display: inline-flex;
+  color: var(--color-icon-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow { transition: none; }
+  .button:hover .arrow, .button:focus-visible .arrow { transform: none; }
+}

@@ -1,0 +1,18 @@
+.notice {
+  padding: 0.6rem var(--container-gutter);
+  border-bottom: 2px solid var(--palette-clay-800);
+  background: #fbe7c6;
+  color: #3d2410;
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  text-align: center;
+}
+
+.notice p {
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+.notice strong {
+  font-weight: 700;
+}

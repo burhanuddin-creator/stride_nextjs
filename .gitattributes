@@ -1,0 +1,14 @@
+# Normalise text files to LF in the repository and working tree, whatever a machine's core.autocrlf is
+# (the project's files are LF; Windows checkouts would otherwise get CRLF and noisy diffs).
+* text=auto eol=lf
+
+# Binary assets: never touch line endings, no text diffs.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.gif binary
+*.woff binary
+*.woff2 binary
+*.zip binary

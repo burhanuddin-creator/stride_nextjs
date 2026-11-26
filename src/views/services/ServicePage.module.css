@@ -1,0 +1,126 @@
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 1rem + 4vw, 4rem);
+  align-items: center;
+}
+
+.aboutTitle {
+  margin-bottom: 1.25rem;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.aboutText {
+  color: var(--color-text-body);
+  line-height: 1.75;
+}
+
+.aboutText + .aboutText {
+  margin-top: 1rem;
+}
+
+.aboutPhoto {
+  overflow: hidden;
+  height: clamp(15rem, 10rem + 14vw, 21.25rem);
+  border-radius: var(--radius-md);
+}
+
+/* ---- Complementary services ---- */
+.relatedBand {
+  padding-block: clamp(2.5rem, 2rem + 2vw, 3.75rem);
+}
+
+.relatedTitle {
+  margin-bottom: 1.75rem;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+}
+
+.related {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 3.75rem;
+  list-style: none;
+}
+
+.relatedItem {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: start;
+}
+
+.relatedThumb {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 116 / 82;
+  border-radius: var(--radius-md);
+}
+
+.relatedLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-text-heading);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.relatedLink span:last-child {
+  color: var(--color-text-accent);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.relatedLink:hover span:first-child {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.relatedCopy p {
+  margin-top: 0.6rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+.note {
+  max-width: 30rem;
+  margin-top: 1.75rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.faqTitle {
+  margin-bottom: 1.75rem;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+@media (max-width: 899px) {
+  .about,
+  .related {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 479px) {
+  .relatedItem {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .relatedLink > span:last-child {
+    display: inline-block;
+    transition: transform 240ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  .relatedLink:hover > span:last-child,
+  .relatedLink:focus-visible > span:last-child {
+    transform: translateX(4px);
+  }
+}

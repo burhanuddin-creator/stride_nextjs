@@ -1,0 +1,21 @@
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-eyebrow);
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.accent {
+  color: var(--color-text-accent);
+}
+
+.light {
+  color: var(--color-text-on-dark-muted);
+}
+
+.success {
+  color: var(--color-text-success);
+}

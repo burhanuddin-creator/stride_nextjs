@@ -1,0 +1,159 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+}
+
+.copy {
+  max-width: 46rem;
+}
+
+.withImage .inner {
+  display: flex;
+  align-items: center;
+  min-height: clamp(26rem, 22rem + 10vw, 31rem);
+}
+
+.withImage .copy {
+  max-width: 34rem;
+}
+
+/* Edge-to-edge photo on the right, faded into the teal panel. */
+.withAside .inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.75rem, 1rem + 3vw, 3rem);
+  align-items: center;
+}
+
+.media {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 58%;
+}
+
+.media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--color-surface-dark) 0%, rgb(17 59 64 / 82%) 14%, rgb(17 59 64 / 0%) 46%);
+  content: '';
+}
+
+.photo {
+  height: 100%;
+}
+
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0 0 1.5rem;
+  list-style: none;
+  font-size: var(--text-xs);
+}
+
+.crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.crumbs a {
+  color: var(--color-text-on-dark);
+  text-underline-offset: 3px;
+}
+
+.crumbSep {
+  opacity: 0.75;
+}
+
+.title {
+  color: var(--color-text-on-dark);
+  font-size: clamp(2.5rem, 1.6rem + 3vw, 3.875rem);
+}
+
+.tagline {
+  margin-top: 1.1rem;
+  color: var(--color-text-on-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.text {
+  max-width: 34rem;
+  margin-top: 1.1rem;
+  color: var(--color-text-on-dark);
+  font-size: var(--text-base);
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+/* Fills its parent (Home hero slider); on desktop the copy stays vertically centred in the extra height. */
+.fill {
+  height: 100%;
+}
+
+@media (min-width: 900px) {
+  .fill.withImage .inner {
+    min-height: max(100%, clamp(26rem, 22rem + 10vw, 31rem));
+  }
+}
+
+@media (max-width: 899px) {
+  .withAside .inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .withImage .inner {
+    display: block;
+    min-height: 0;
+    padding-top: 2.5rem;
+  }
+
+  /* Stack: photo first (faded at its foot into the teal), then the copy. */
+  .media {
+    position: relative;
+    width: 100%;
+    height: clamp(13rem, 50vw, 20rem);
+  }
+
+  .media::after {
+    background: linear-gradient(180deg, rgb(17 59 64 / 0%) 55%, var(--color-surface-dark) 100%);
+  }
+
+  /* Home: copy first, then the photo, faded at its top into the teal (Home page package mobile order). */
+  .imageBelow .inner {
+    padding-bottom: 1.75rem;
+  }
+
+  .imageBelow .media {
+    height: clamp(15rem, 62vw, 20rem);
+  }
+
+  .imageBelow .media::after {
+    background: linear-gradient(180deg, var(--color-surface-dark) 0%, rgb(17 59 64 / 0%) 35%);
+  }
+}
+
+@media (max-width: 479px) {
+  .actions > a {
+    width: 100%;
+  }
+}

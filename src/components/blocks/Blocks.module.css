@@ -1,0 +1,361 @@
+/* ---- Bands ---- */
+.band {
+  padding-block: clamp(3rem, 2rem + 3vw, 4.75rem);
+}
+
+.white {
+  background: var(--color-surface-page);
+}
+
+.subtle {
+  background: var(--color-surface-subtle);
+}
+
+.warm {
+  background: var(--color-surface-warm);
+}
+
+.sand {
+  background: var(--color-surface-sand-light);
+}
+
+/* ---- Section intro ---- */
+.intro {
+  max-width: 48rem;
+  margin-bottom: clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem);
+}
+
+.intro h2 {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.introText {
+  margin-top: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* ---- Numbered cards ---- */
+.numberedCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.numberedCard {
+  padding: 1.75rem 1.75rem 2.25rem;
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-subtle);
+}
+
+.bigNumber {
+  display: block;
+  margin-bottom: 1.1rem;
+  color: var(--color-text-accent);
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 1.6rem + 1.2vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.numberedCard h3,
+.ruledItem h3 {
+  font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.45rem);
+  line-height: 1.25;
+}
+
+.numberedCard p,
+.ruledItem p {
+  margin-top: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.75;
+}
+
+/* ---- Ruled columns ---- */
+.ruled {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.ruledItem {
+  padding-top: 1.5rem;
+  border-top: 1.5px solid var(--palette-sand-400);
+}
+
+.ruledNumber {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--color-text-accent);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.ruledNumberSmall {
+  display: block;
+  margin-bottom: 0.9rem;
+  color: var(--color-text-accent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.ruledAction {
+  margin-top: 1rem;
+}
+
+/* ---- Arrow lists ---- */
+.arrowColumns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 3rem;
+}
+
+.arrowList {
+  display: grid;
+  gap: 1.6rem;
+  list-style: none;
+}
+
+.arrowList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  color: var(--color-text-heading);
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+  line-height: 1.45;
+}
+
+.arrowIcon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 0.15em;
+  fill: none;
+  stroke: var(--color-icon-accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.checklist {
+  display: grid;
+  list-style: none;
+}
+
+.checklist li {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding-block: 1.1rem;
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-text-body);
+}
+
+.checkArrow {
+  flex: none;
+  color: var(--color-text-accent);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Scroll entrance (see useReveal): items are only hidden while the container is armed and off-screen. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal='armed'] .revealItem {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+
+  [data-reveal='shown'] .revealItem {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.5s ease var(--reveal-delay, 0ms),
+      transform 0.5s ease var(--reveal-delay, 0ms);
+  }
+}
+
+@media print {
+  [data-reveal] .revealItem {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.dotList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 3rem;
+  padding-left: 1.25rem;
+}
+
+.dotList li {
+  padding-left: 0.4rem;
+  color: var(--color-text-body);
+}
+
+.dotList li::marker {
+  color: var(--color-icon-accent);
+}
+
+/* ---- Note panel ---- */
+.note {
+  align-self: start;
+  padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  border-left: 3px solid var(--color-action-clay);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  background: var(--color-surface-warm);
+}
+
+.noteTitle {
+  font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.75rem);
+  line-height: 1.2;
+}
+
+.noteBody {
+  margin-top: 1rem;
+  color: var(--color-text-body);
+  line-height: 1.75;
+}
+
+.noteBody > * + * {
+  margin-top: 0.9rem;
+}
+
+/* ---- Two columns ---- */
+.twoColumn {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2rem, 1rem + 4vw, 4.5rem);
+  align-items: start;
+}
+
+.mainColumn > p + p,
+.mainColumn > h2 + p {
+  margin-top: 1rem;
+}
+
+.mainColumn > p {
+  line-height: 1.75;
+}
+
+/* ---- Centered CTA ---- */
+.centeredCta {
+  padding-block: clamp(3rem, 2rem + 3vw, 4.5rem);
+}
+
+.centeredInner {
+  margin-inline: auto;
+  max-width: 52rem;
+  text-align: center;
+}
+
+.centeredInner h2 {
+  margin-inline: auto;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.centeredInner p {
+  margin-inline: auto;
+  margin-top: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+/* ---- Appointment banner ---- */
+.banner {
+  padding-block: clamp(3rem, 2rem + 3vw, 4.25rem);
+  background: var(--color-surface-sand);
+}
+
+.bannerInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+  align-items: center;
+}
+
+.bannerCopy h2 {
+  max-width: 32rem;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.625rem);
+}
+
+.bannerCopy p {
+  max-width: 34rem;
+  margin-block: 1rem 1.6rem;
+  color: var(--color-text-body);
+  line-height: 1.75;
+}
+
+.bannerPhoto {
+  overflow: hidden;
+  height: clamp(15rem, 12rem + 8vw, 19rem);
+  border-radius: 18px;
+}
+
+@media (max-width: 899px) {
+  .numberedCards,
+  .ruled {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .ruled {
+    gap: 2rem;
+  }
+
+  .twoColumn,
+  .bannerInner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .arrowColumns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .dotList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .actions > a {
+    width: 100%;
+  }
+}
+
+/* A restrained directional cue; motion never changes the text or hit area. */
+@media (prefers-reduced-motion: no-preference) {
+  .arrowIcon, .checkArrow {
+    transition: transform 240ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  [data-reveal='shown'] .arrowIcon {
+    animation: arrowSettle 600ms cubic-bezier(0.2, 0.7, 0.3, 1) var(--reveal-delay, 0ms) backwards;
+  }
+  .arrowList li:hover .arrowIcon, .checklist li:hover .checkArrow {
+    transform: translateX(4px);
+  }
+}
+@keyframes arrowSettle {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}

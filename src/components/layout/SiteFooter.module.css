@@ -1,0 +1,127 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark-muted);
+  font-size: var(--text-sm);
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  align-items: center;
+  gap: 2rem;
+  padding-block: 2rem 2.25rem;
+}
+
+.logo {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: var(--radius-sm);
+}
+
+.logo img {
+  width: auto;
+  height: 64px;
+}
+
+
+
+
+
+
+.footerLink {
+  display: inline-block;
+  padding-block: 0.2rem;
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+.brandBlock {
+  display: grid;
+  gap: 1rem;
+}
+
+.notice {
+  margin: 0;
+  padding: 0.75rem var(--container-gutter);
+  background: var(--color-surface-darker);
+  color: var(--color-text-on-dark-muted);
+  font-size: var(--text-xs);
+  text-align: center;
+}
+
+/* Raised trademark sign after "Stride Physical Therapy"; keeps the line height steady. */
+.trademark {
+  margin-left: 0.1em;
+  font-size: 0.75em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+.tagline {
+  color: var(--color-text-on-dark);
+}
+
+.contactBlock {
+  display: grid;
+  gap: 0.1rem;
+  color: var(--color-text-on-dark);
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.hoursList {
+  display: grid;
+  margin-block: 0.35rem;
+}
+
+.contactBlock .footerLink {
+  justify-self: start;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.siteLinks {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.linkRow {
+  margin: 0;
+  color: var(--color-text-on-dark);
+}
+
+.dot {
+  margin-inline: 0.45rem;
+  opacity: 0.7;
+}
+
+.provenance {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  color: var(--color-text-on-dark-muted);
+  font-size: var(--text-xs);
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(200px, 1fr) minmax(220px, 1fr) minmax(280px, 1.3fr);
+    align-items: start;
+    padding-block: 2.75rem 1.75rem;
+  }
+}
+
+@media (max-width: 899px) {
+  .logo img {
+    height: 56px;
+  }
+}

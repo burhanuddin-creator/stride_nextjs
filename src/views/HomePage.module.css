@@ -1,0 +1,607 @@
+/* Home page (Home page developer package), in the site's tokens. Breakpoints follow the package: 1000px and 720px. */
+
+/* ---- "Coming Soon" poster slide (hero slider). Its text is part of the image and sits on the left, so the poster
+   is never cropped into it. ---- */
+.poster {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-surface-darker);
+}
+
+/* Desktop: the poster fills the slide edge to edge, anchored left; the slider's minimum height (36vw) keeps the crop to
+   a sliver of the top and bottom margins, and wider slots only trim the photo on the right. */
+.posterImage {
+  position: absolute;
+  inset: 0;
+}
+
+.posterImage img {
+  object-position: left center;
+}
+
+.posterMobile {
+  display: none;
+}
+
+/* Below 900px the wide poster would be too small to read: the slide shows the poster's text-free clinic photo with
+   the same words as real text, in the poster's colours (cream, gold rules, serif), copy first like the welcome slide. */
+@media (max-width: 899px) {
+  .posterImage {
+    display: none;
+  }
+
+  .posterMobile {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-height: 34rem;
+  }
+
+  .posterPhoto {
+    position: absolute;
+    inset: 0;
+  }
+
+  .posterPhoto img {
+    object-position: 62% bottom;
+  }
+
+  /* Deep teal behind the words, clearing towards the photo below (as on the poster's left edge). */
+  .posterMobile::before {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, #0e3337 0%, rgb(14 51 55 / 94%) 42%, rgb(14 51 55 / 55%) 62%, rgb(14 51 55 / 0%) 82%);
+    content: '';
+  }
+
+  .posterCopy {
+    position: relative;
+    z-index: 2;
+    padding-block: 2.5rem 1.5rem;
+    color: #f7f0e3;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  .posterEyebrow,
+  .posterTitle,
+  .posterSoon,
+  .posterTagline {
+    margin: 0;
+  }
+
+  .posterEyebrow {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgb(212 176 106 / 75%);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .posterTitle {
+    margin-top: 1.25rem;
+    font-size: clamp(2.25rem, 1.4rem + 4vw, 3.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .posterSoon {
+    margin-top: 0.9rem;
+    color: #d6b46e;
+    font-size: clamp(1.4rem, 1rem + 2vw, 1.9rem);
+    line-height: 1.15;
+  }
+
+  .posterTagline {
+    margin-top: 0.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgb(212 176 106 / 75%);
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+}
+
+.section {
+  padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
+}
+
+.warm {
+  background: var(--color-surface-warm);
+}
+
+.ruled {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.h2 {
+  font-size: clamp(2rem, 1.3rem + 2.4vw, 2.875rem);
+  line-height: 1.12;
+}
+
+.headText {
+  max-width: 26rem;
+  margin-top: 1rem;
+  color: var(--color-text-body);
+  line-height: 1.7;
+}
+
+.sectionHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 5vw, 5rem);
+  align-items: end;
+}
+
+.sectionHead .headText {
+  margin: 0 0 0.1rem;
+}
+
+/* Clay-underlined text link with a small arrow that nudges on hover. */
+.textLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  color: var(--color-text-heading);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: inset 0 -1px 0 var(--color-action-clay);
+}
+
+.textLink:hover {
+  color: var(--color-text-accent);
+}
+
+.textLinkArrow {
+  color: var(--color-action-clay);
+  transition: transform var(--transition-fast);
+}
+
+.textLink:hover .textLinkArrow,
+.textLink:focus-visible .textLinkArrow {
+  transform: translateX(3px);
+}
+
+.afterTabs {
+  margin-top: 1.5rem;
+}
+
+/* ---- The Stride difference ---- */
+.difference {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: clamp(2.5rem, 1rem + 6vw, 5.6rem);
+  align-items: start;
+}
+
+.differenceHeading .headText {
+  max-width: 22.5rem;
+}
+
+.differenceItem {
+  position: relative;
+  padding: 1.4rem 0 1.5rem 1.9rem;
+  border-top: 1px solid #d3c4b1;
+}
+
+.differenceItem:last-child {
+  padding-bottom: 0;
+}
+
+.differenceItem::before {
+  position: absolute;
+  top: 1.75rem;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--color-action-clay);
+  border-radius: 50%;
+  content: '';
+}
+
+.differenceTitle {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.4rem, 1.15rem + 0.8vw, 1.5625rem);
+}
+
+.differenceItem p {
+  max-width: 32.5rem;
+  color: var(--color-text-body);
+  line-height: 1.7;
+}
+
+/* ---- Featured services ---- */
+.serviceList {
+  margin: 2.5rem 0 1.9rem;
+  border-top: 1px solid var(--color-divider);
+  list-style: none;
+}
+
+.serviceRow {
+  display: grid;
+  grid-template-columns: 126px minmax(10rem, 0.85fr) minmax(14rem, 1.2fr) auto;
+  gap: 1.75rem;
+  align-items: center;
+  padding: 1.4rem 0.5rem;
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-text-body);
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.serviceRow:hover {
+  background: rgb(247 244 239 / 60%);
+}
+
+.serviceImage {
+  overflow: hidden;
+  width: 126px;
+  height: 91px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-tint-light);
+}
+
+.serviceTitle {
+  font-size: clamp(1.4rem, 1.1rem + 0.9vw, 1.625rem);
+}
+
+.serviceRow:hover .serviceTitle {
+  color: var(--color-text-accent);
+}
+
+.serviceText {
+  max-width: 28.75rem;
+  line-height: 1.6;
+}
+
+.serviceMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-text-heading);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.serviceArrow {
+  color: var(--color-action-clay);
+  font-size: 1.4rem;
+  transition: transform var(--transition-fast);
+}
+
+.serviceRow:hover .serviceArrow,
+.serviceRow:focus-visible .serviceArrow {
+  transform: translate(3px, -3px);
+}
+
+.serviceBottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.9rem;
+  align-items: center;
+}
+
+.serviceBottom p {
+  max-width: 23.75rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ---- Getting started ---- */
+.faq {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2.5rem, 1rem + 5vw, 5rem);
+}
+
+.faqIntro .headText {
+  max-width: 20.5rem;
+}
+
+.allFaqs {
+  margin-top: 0.75rem;
+}
+
+/* ---- Appointment band (full-width sand, centered) ---- */
+.start {
+  padding-block: clamp(3.25rem, 2.25rem + 3vw, 4.5rem);
+  background: var(--color-surface-sand);
+  text-align: center;
+}
+
+.startTitle {
+  font-size: clamp(2.2rem, 1.5rem + 2.4vw, 3.125rem);
+  line-height: 1.12;
+}
+
+.startText {
+  max-width: 34.5rem;
+  margin: 1rem auto 1.75rem;
+  color: var(--color-text-body);
+  line-height: 1.7;
+}
+
+.startEmail {
+  display: flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.75rem auto 0;
+  color: var(--color-text-heading);
+  font-size: var(--text-xs);
+}
+
+/* ---- Location ---- */
+.location {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2.5rem, 1rem + 4vw, 4rem);
+  align-items: start;
+}
+
+.address {
+  margin-top: 1.25rem;
+  color: var(--color-text-heading);
+  font-style: normal;
+  line-height: 1.65;
+}
+
+.numbers {
+  display: grid;
+  gap: 0.15rem;
+  margin-top: 0.85rem;
+  color: var(--color-text-heading);
+}
+
+.contactLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--color-action-link);
+  overflow-wrap: anywhere;
+}
+
+.numbers .contactLink {
+  min-height: 0;
+  padding-block: 0.35rem;
+}
+
+.hours {
+  max-width: 22rem;
+  margin: 1.25rem 0 0.75rem;
+  font-size: var(--text-sm);
+}
+
+.hours > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.hours dt {
+  color: var(--color-text-heading);
+  font-weight: 600;
+}
+
+.hours dd {
+  margin: 0;
+  color: var(--color-text-body);
+  text-align: right;
+}
+
+.arrival {
+  max-width: 22.5rem;
+  margin: 1rem 0 1.4rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+}
+
+.map {
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid #d7ddd7;
+  border-radius: 18px;
+  background: var(--color-surface-warm);
+}
+
+.map iframe {
+  display: block;
+  width: 100%;
+  height: 470px;
+  border: 0;
+}
+
+.mapLink {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  padding: 0.6rem 1.1rem;
+  color: var(--color-action-link);
+  font-size: var(--text-xs);
+}
+
+/* ---- One-time scroll reveal (useReveal arms it only when motion is allowed and IntersectionObserver exists) ---- */
+.reveal[data-reveal='armed'] > *,
+.reveal[data-reveal='armed'] > li {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.reveal[data-reveal='shown'] > * {
+  animation: reveal-in 650ms ease-out both;
+}
+
+.reveal[data-reveal='shown'] > :nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.reveal[data-reveal='shown'] > :nth-child(3) {
+  animation-delay: 220ms;
+}
+
+.reveal[data-reveal='shown'] > :nth-child(4) {
+  animation-delay: 300ms;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Mobile booking/directions bar (below 720px only) ---- */
+.mobileActions {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .serviceRow {
+    grid-template-columns: 96px minmax(9rem, 0.9fr) minmax(12rem, 1.2fr) auto;
+    gap: 1.25rem;
+  }
+
+  .serviceImage {
+    width: 96px;
+    height: 85px;
+  }
+}
+
+@media (max-width: 899px) {
+  .br {
+    display: none;
+  }
+}
+
+@media (max-width: 719px) {
+  .sectionHead,
+  .difference,
+  .faq,
+  .location {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .sectionHead .headText {
+    margin-top: 0;
+  }
+
+  .headText,
+  .differenceHeading .headText,
+  .faqIntro .headText,
+  .arrival,
+  .hours {
+    max-width: none;
+  }
+
+  .differenceItem {
+    padding-left: 1.5rem;
+  }
+
+  .serviceRow {
+    grid-template-columns: 86px minmax(0, 1fr);
+    gap: 0.6rem 1.1rem;
+    padding: 1.5rem 0;
+  }
+
+  .serviceImage {
+    grid-row: 1 / 4;
+    align-self: start;
+    width: 86px;
+    height: 100px;
+  }
+
+  .serviceTitle,
+  .serviceText,
+  .serviceMore {
+    grid-column: 2;
+  }
+
+  .serviceText {
+    font-size: var(--text-sm);
+  }
+
+  .map iframe {
+    height: 320px;
+  }
+
+  .mobileActions {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 65;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 0.55rem;
+    padding: 0.6rem 1rem calc(0.6rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-page);
+    box-shadow: 0 -4px 20px rgb(0 63 73 / 7%);
+  }
+
+  .mobileActions a {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-action-primary);
+    color: var(--color-action-on-primary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .mobileActions a:last-child {
+    background: var(--color-surface-sand);
+    color: var(--color-text-heading);
+  }
+
+  /* Room for the fixed bar (incl. the safe area) below the footer, so it never covers content. */
+  :global(html[data-home-actions]) body {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal[data-reveal] > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .textLinkArrow,
+  .serviceArrow,
+  .serviceRow {
+    transition: none;
+  }
+
+  .textLink:hover .textLinkArrow,
+  .textLink:focus-visible .textLinkArrow,
+  .serviceRow:hover .serviceArrow,
+  .serviceRow:focus-visible .serviceArrow {
+    transform: none;
+  }
+}

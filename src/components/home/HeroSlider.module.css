@@ -1,0 +1,119 @@
+.slider {
+  position: relative;
+  background: var(--color-surface-darker);
+}
+
+/* Every slide in the same grid cell: the slider is as tall as its tallest slide, so nothing below it jumps. */
+.track {
+  display: grid;
+}
+
+/* Desktop: at least 36vw tall, so the 1942×809 poster (cover, anchored left) only ever loses a sliver of its top and
+   bottom margins and never its text. */
+@media (min-width: 900px) {
+  .track {
+    min-height: 36vw;
+  }
+}
+
+.slide {
+  grid-area: 1 / 1;
+  min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.7s ease,
+    visibility 0s linear 0.7s;
+}
+
+.current {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.7s ease,
+    visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .current {
+    transition: none;
+  }
+}
+
+/* ---- Controls: a compact pill, readable over the teal panel and the photos. Bottom centre on small screens; on
+   desktop bottom right, over the photo and clear of the hero's buttons. ---- */
+.controls {
+  position: absolute;
+  bottom: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.125rem 0.25rem;
+  border-radius: 999px;
+  background: rgb(12 46 51 / 72%);
+  backdrop-filter: blur(6px);
+  transform: translateX(-50%);
+}
+
+.control,
+.dot {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.control:hover {
+  background: rgb(255 255 255 / 14%);
+}
+
+.control:focus-visible,
+.dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+@media (min-width: 900px) {
+  .controls {
+    right: clamp(1rem, 3vw, 2.5rem);
+    left: auto;
+    transform: none;
+  }
+}
+
+.dots {
+  display: flex;
+}
+
+.dot {
+  width: 32px;
+}
+
+.dot span {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 55%);
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.dot:hover span {
+  background: rgb(255 255 255 / 85%);
+}
+
+.dot[aria-current='true'] span {
+  width: 22px;
+  background: #fff;
+}

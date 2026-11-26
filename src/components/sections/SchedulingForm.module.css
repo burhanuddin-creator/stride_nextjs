@@ -1,0 +1,294 @@
+/* Scheduling form. Shared field styles come from AppointmentForm.module.css. */
+
+.stepTitle {
+  margin: 0.5rem 0 0.75rem;
+  color: var(--color-text-heading);
+  font-size: var(--text-xl);
+}
+
+.stepTitle:focus {
+  outline: none;
+}
+
+.stepTitle:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.group {
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  border: 0;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 0.6rem;
+}
+
+.choice {
+  position: relative;
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-card);
+  color: var(--color-text-body);
+  cursor: pointer;
+}
+
+.choice input {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  margin: 0;
+  accent-color: var(--color-action-primary);
+}
+
+.choice:has(input:checked) {
+  border-color: var(--color-action-primary);
+  background: var(--color-surface-tint-light);
+  color: var(--color-text-heading);
+  font-weight: 500;
+}
+
+.choice:has(input:focus-visible) {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.note {
+  margin: 0 0 1.25rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.visitCard {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-subtle);
+}
+
+.visitCard p {
+  margin: 0;
+}
+
+.providerButton {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.4rem;
+  justify-self: start;
+  padding: 0.35rem 0;
+  border: 0;
+  background: none;
+  color: var(--color-action-link);
+  font: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.providerPanel {
+  margin: 0.25rem 0 0;
+  color: var(--color-text-body);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+
+
+
+
+
+
+
+
+
+.zone {
+  margin: 0.75rem 0 1rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.times {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.25rem, 1fr));
+  gap: 0.5rem;
+}
+
+.loading {
+  color: var(--color-text-muted);
+}
+
+.notice {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--color-action-clay);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-warm);
+  color: var(--color-text-heading);
+}
+
+.notice p {
+  margin: 0;
+}
+
+.notice:focus {
+  outline: none;
+}
+
+.notice:focus-visible {
+  outline: 3px solid var(--color-focus);
+}
+
+
+/* ---- Date field with a small calendar popup ---- */
+
+.datePicker {
+  position: relative;
+  max-width: 22rem;
+}
+
+.dateField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dateField svg {
+  flex: none;
+  color: var(--color-text-accent);
+}
+
+.placeholder {
+  color: var(--color-text-muted);
+}
+
+.popup {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  width: 100%;
+  min-width: min(20rem, 100%);
+  padding: 0.75rem;
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  box-shadow: var(--shadow-card);
+}
+
+.calendarHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.monthTitle {
+  margin: 0;
+  color: var(--color-text-heading);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.navButton {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-heading);
+  cursor: pointer;
+}
+
+.navButton:hover:not(:disabled) {
+  background: var(--color-surface-subtle);
+}
+
+.navButton:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.calendar th {
+  padding: 0 0 0.25rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendar td {
+  padding: 1px;
+  text-align: center;
+}
+
+.day {
+  width: 100%;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-tint-light);
+  color: var(--color-text-heading);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.day:hover:not(:disabled) {
+  background: var(--color-surface-tint);
+}
+
+.day:disabled {
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 400;
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.day[aria-pressed='true'] {
+  background: var(--color-action-primary);
+  color: var(--color-action-on-primary);
+}
+
+.popupError,
+.popupNote {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-body);
+  font-size: var(--text-sm);
+}
+
+.times .choice {
+  white-space: nowrap;
+}

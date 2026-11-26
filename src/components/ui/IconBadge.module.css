@@ -1,0 +1,62 @@
+.badge {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--color-icon-accent);
+}
+
+.sm {
+  width: 44px;
+  height: 44px;
+}
+
+.sm .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.md {
+  width: 60px;
+  height: 60px;
+}
+
+.md .icon {
+  width: 28px;
+  height: 28px;
+}
+
+.lg {
+  width: 76px;
+  height: 76px;
+}
+
+.lg .icon {
+  width: 36px;
+  height: 36px;
+}
+
+.ring {
+  border: 1.5px solid var(--color-icon-ring);
+}
+
+.ring-filled {
+  border: 1.5px solid var(--color-icon-ring);
+  background: var(--palette-white);
+}
+
+.soft-teal {
+  background: var(--color-surface-tint);
+  color: var(--color-text-heading);
+}
+
+.soft-sand {
+  background: var(--color-surface-sand-light);
+  color: var(--color-text-heading);
+}
+
+.plain {
+  border-radius: 0;
+  color: var(--color-text-heading);
+}

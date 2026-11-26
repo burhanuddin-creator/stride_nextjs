@@ -1,0 +1,46 @@
+.curves {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(60%, 760px);
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-sand .c1 {
+  fill: #efe1cc;
+}
+
+.hero-sand .c2 {
+  fill: #ead8be;
+}
+
+.band-sand {
+  width: min(32%, 360px);
+}
+
+.band-sand .c1 {
+  fill: #e8d3b3;
+  opacity: 0.8;
+}
+
+.band-sand .c2 {
+  fill: #e3c8a2;
+  opacity: 0.7;
+}
+
+.band-teal {
+  width: min(32%, 360px);
+}
+
+.band-teal .c1,
+.band-teal .c2 {
+  fill: #ffffff;
+  opacity: 0.05;
+}
+
+@media (max-width: 767px) {
+  .curves {
+    width: 80%;
+    opacity: 0.6;
+  }
+}
