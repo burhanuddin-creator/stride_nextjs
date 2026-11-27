@@ -1,7 +1,7 @@
 import { media } from '../../data/media';
 import { SERVICE_DETAIL_LIST, SERVICES_HERO } from '../../data/serviceDetails';
 import { serviceHref } from '../../data/services';
-import { contactHref } from '../../utils/links';
+import { CONTACT_HREF } from '../../utils/links';
 import { TealHero } from '../../components/blocks/TealHero';
 import { ButtonLink } from '../../components/ui/Button';
 import { Photo } from '../../components/ui/Photo';
@@ -24,8 +24,8 @@ export default function ServicesPage() {
             <ButtonLink to="#directory" variant="clay">
               Explore All Services
             </ButtonLink>
-            <ButtonLink to={contactHref()} variant="ghost" arrow={false}>
-              Book My Evaluation
+            <ButtonLink to={CONTACT_HREF} variant="ghost" arrow={false}>
+              Contact Stride
             </ButtonLink>
           </>
         }
@@ -84,8 +84,8 @@ export default function ServicesPage() {
               <p>Connect care with meaningful movement.</p>
             </li>
           </ol>
-          <ButtonLink to={contactHref()} variant="clay">
-            Book My Evaluation
+          <ButtonLink to={CONTACT_HREF} variant="clay">
+            Contact Stride
           </ButtonLink>
         </div>
       </section>

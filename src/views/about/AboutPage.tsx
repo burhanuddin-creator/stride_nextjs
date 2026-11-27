@@ -1,7 +1,7 @@
 import { addressCityLine, emailHref, faxDisplay, phoneDisplay, phoneHref, site } from '../../config/site';
 import { portrait } from '../../data/media';
 import { SERVICES_INDEX_HREF } from '../../data/services';
-import { CONTACT_QUESTION_HREF, contactHref, FOUNDER_HREF } from '../../utils/links';
+import { CONTACT_HREF, CONTACT_QUESTION_HREF, FOUNDER_HREF } from '../../utils/links';
 import { LegacyHashRedirect } from '../../components/layout/LegacyHashRedirect';
 import { Band, CenteredCta } from '../../components/blocks/Blocks';
 import { TealHero } from '../../components/blocks/TealHero';
@@ -26,7 +26,7 @@ export function AboutClosing() {
       text="Start with a conversation about your concerns, your day, and the activities you want to get back to."
       actions={
         <>
-          <ButtonLink to={contactHref()}>Book My Evaluation</ButtonLink>
+          <ButtonLink to={CONTACT_HREF}>Contact Stride</ButtonLink>
         </>
       }
     />
@@ -45,8 +45,8 @@ export default function AboutPage() {
         text="Stride began with a desire to give each patient more focused attention and a plan built around their own needs."
         actions={
           <>
-            <ButtonLink to={contactHref()} variant="clay">
-              Book My Evaluation
+            <ButtonLink to={CONTACT_HREF} variant="clay">
+              Contact Stride
             </ButtonLink>
             <ButtonLink to={FOUNDER_HREF} variant="ghost">
               Meet Dr. Arva Gadly

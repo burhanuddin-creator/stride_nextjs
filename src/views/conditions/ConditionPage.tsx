@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { CONDITION_BY_SLUG, isConditionSlug, WHAT_WE_TREAT_HREF } from '../../data/conditions';
 import { media } from '../../data/media';
-import { conditionContactHref } from '../../utils/links';
+import { CONTACT_HREF } from '../../utils/links';
 import { AppointmentBanner, ArrowColumns, Band, RuledColumns, SectionIntro } from '../../components/blocks/Blocks';
 import { DisclosureList } from '../../components/blocks/Disclosure';
 import { TealHero } from '../../components/blocks/TealHero';
@@ -18,8 +18,6 @@ export default function ConditionPage({ slug }: { slug: string }) {
   const condition = isConditionSlug(slug) ? CONDITION_BY_SLUG[slug] : undefined;
   if (!condition) notFound();
 
-  const appointmentHref = conditionContactHref(condition.slug);
-  const bookLabel = `Book My Evaluation about ${condition.name}`;
 
   return (
     <>
@@ -30,8 +28,8 @@ export default function ConditionPage({ slug }: { slug: string }) {
         text={condition.heroText}
         actions={
           <>
-            <ButtonLink to={appointmentHref} variant="clay" aria-label={bookLabel}>
-              Book My Evaluation
+            <ButtonLink to={CONTACT_HREF} variant="clay">
+              Contact Stride
             </ButtonLink>
             <ButtonLink to={WHAT_WE_TREAT_HREF} variant="ghost" arrow={false}>
               Explore All Treatment Areas
@@ -83,8 +81,8 @@ export default function ConditionPage({ slug }: { slug: string }) {
         text={condition.appointment.text}
         image={media(condition.appointment.image, condition.appointment.alt)}
         action={
-          <ButtonLink to={appointmentHref} variant="clay" aria-label={bookLabel}>
-            Book My Evaluation
+          <ButtonLink to={CONTACT_HREF} variant="clay">
+            Contact Stride
           </ButtonLink>
         }
       />

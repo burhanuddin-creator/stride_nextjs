@@ -145,6 +145,25 @@
   }
 }
 
+/* "Schedule an Appointment" is a long label: below 1280px a tighter row and no arrow keep it on screen. */
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .inner {
+    gap: 1rem;
+  }
+
+  .navList {
+    gap: 0.5rem;
+  }
+
+  .cta {
+    padding-inline: 0.85rem;
+  }
+
+  .cta svg {
+    display: none;
+  }
+}
+
 @media (max-width: 1023px) {
   .nav,
   .cta {

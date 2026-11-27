@@ -126,11 +126,72 @@ test('Schedule an Appointment reads SPRY config and availability from the API an
   await page.goto('/contact/schedule-appointment');
   await expect(page.getByRole('heading', { level: 1, name: 'Schedule an Appointment' })).toBeVisible();
   await expect.poll(() => api.requests.some((r) => r.url().startsWith(`${API}/scheduling/availability?from=`))).toBe(true);
-  // Times appear after choosing the date (only the mocked slot exists).
-  await page.getByRole('button', { name: /^Date:/ }).click();
+  await expect(page.getByRole('complementary', { name: 'Your appointment' })).toContainText('Dr. Arva Gadly');
+  // Times appear after choosing the date (only the mocked slot exists), labelled exactly as the server sent them.
   await page.getByRole('button', { name: /, 1 time available/ }).first().click();
-  await expect(page.getByRole('group', { name: /Available times on/ }).getByRole('radio')).toHaveCount(1);
+  await expect(page.getByRole('group', { name: /Available times/ }).getByRole('radio')).toHaveCount(1);
+  await expect(page.getByRole('radio', { name: '10:00 am' })).toBeVisible();
   expect(api.requests.filter((r) => r.method() !== 'GET')).toEqual([]);
+  expect(api.unexpected).toEqual([]);
+});
+
+test('Schedule an Appointment: three steps post one booking to POST /scheduling/bookings (intercepted) and confirm', async ({ page }) => {
+  const day = new Date(Date.now() + 3 * 86_400_000).toISOString().slice(0, 10);
+  let bookings = 0;
+  const api = await interceptApi(page, {
+    'GET /scheduling/config': (route) =>
+      route.fulfill({
+        json: {
+          data: {
+            available: true,
+            provider_name: 'Dr. Arva Gadly',
+            appointment_type: 'Initial Evaluation',
+            duration_minutes: 60,
+            timezone: 'America/Chicago',
+            first_date: day,
+            last_date: day,
+          },
+        },
+      }),
+    'GET /scheduling/availability': (route) =>
+      route.fulfill({ json: { data: { days: [{ date: day, slots: [{ start: `${day}T15:00:00Z`, time: '10:00 am' }] }] } } }),
+    'POST /scheduling/bookings': (route) => {
+      bookings++;
+      return route.fulfill({
+        status: 201,
+        json: { data: { status: 'booked', appointment: { starts_at_label: 'Test day at 10:00 AM CDT', duration_minutes: 60 } } },
+      });
+    },
+  });
+  await page.goto('/contact/schedule-appointment');
+  await expect(page.getByText('sample times only', { exact: false })).toHaveCount(0); // real (HTTP) mode
+  await page.getByRole('button', { name: /, 1 time available/ }).first().click();
+  await page.getByRole('radio', { name: '10:00 am' }).check();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel(/First name/).fill('Jamie');
+  await page.getByLabel(/Last name/).fill('Rivera');
+  await page.getByLabel('Month', { exact: true }).selectOption({ label: 'April' });
+  await page.getByLabel('Day', { exact: true }).fill('12');
+  await page.getByLabel('Year', { exact: true }).fill('1985');
+  await page.getByLabel(/^Sex/).selectOption({ label: 'Female' });
+  await page.getByLabel(/US mobile number/).fill('630.555.0123');
+  await page.getByLabel(/Email address/).fill('jamie.rivera@example.test');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('radio', { name: 'Self-pay' }).check();
+  await page.getByLabel(/book this appointment/).check();
+  expect(bookings).toBe(0); // nothing is sent before the explicit confirmation
+  await page.getByRole('button', { name: 'Confirm Appointment', exact: true }).click();
+
+  await expect(page.getByRole('heading', { name: 'Your appointment is booked.' })).toBeFocused();
+  await expect(page.getByText('Test day at 10:00 AM CDT')).toBeVisible();
+  expect(bookings).toBe(1);
+  const post = api.requests.find((r) => r.method() === 'POST')!;
+  expect(post.url()).toBe(`${API}/scheduling/bookings`);
+  expect(post.headers()['idempotency-key']).toMatch(/^[A-Za-z0-9_-]{16,128}$/);
+  expect(post.postDataJSON()).toEqual({
+    start: `${day}T15:00:00Z`, payment_mode: 'SELF_PAY', first_name: 'Jamie', last_name: 'Rivera', date_of_birth: '1985-04-12',
+    sex: 'FEMALE', mobile: '+16305550123', email: 'jamie.rivera@example.test', consent: true,
+  });
   expect(api.unexpected).toEqual([]);
 });
 
@@ -141,6 +202,6 @@ test('Schedule an Appointment offers the phone and request form when online book
   await page.goto('/contact/schedule-appointment');
   await expect(page.getByRole('link', { name: 'Use the Request Form' })).toBeVisible();
   await expect.poll(() => api.requests.some((r) => r.url() === `${API}/scheduling/config`)).toBe(true);
-  await expect(page.getByRole('button', { name: /Book Appointment/ })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /Confirm Appointment|Continue/ })).toHaveCount(0);
   expect(api.unexpected).toEqual([]);
 });

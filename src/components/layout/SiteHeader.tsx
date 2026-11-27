@@ -7,7 +7,7 @@ import { Menu, X } from 'lucide-react';
 import { isNavGroup, primaryNav } from '../../data/navigation';
 import { MobileNavGroup, NavDropdown } from './NavDropdown';
 import { NavLink } from './NavLink';
-import { contactHref } from '../../utils/links';
+import { SCHEDULE_APPOINTMENT_PATH } from '../../utils/links';
 import { ButtonLink } from '../ui/Button';
 import logo from '../../assets/brand/logo-lockup.png';
 import styles from './SiteHeader.module.css';
@@ -61,8 +61,8 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <ButtonLink to={contactHref()} size="sm" className={styles.cta}>
-          Book My Evaluation
+        <ButtonLink to={SCHEDULE_APPOINTMENT_PATH} size="sm" className={styles.cta}>
+          Schedule an Appointment
         </ButtonLink>
 
         <button
@@ -103,8 +103,8 @@ export function SiteHeader() {
               </li>
             ))}
           </ul>
-          <ButtonLink to={contactHref()} fullWidth className={styles.mobileCta}>
-            Book My Evaluation
+          <ButtonLink to={SCHEDULE_APPOINTMENT_PATH} fullWidth className={styles.mobileCta}>
+            Schedule an Appointment
           </ButtonLink>
         </nav>
       </div>

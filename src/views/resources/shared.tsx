@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { PATIENT_RESOURCES_HREF, resourceHref, type PatientFaq } from '../../data/resources';
-import { CONTACT_QUESTION_HREF, contactHref } from '../../utils/links';
+import { CONTACT_HREF, CONTACT_QUESTION_HREF } from '../../utils/links';
 import { CenteredCta } from '../../components/blocks/Blocks';
 import { TealHero } from '../../components/blocks/TealHero';
 import { ButtonLink } from '../../components/ui/Button';
@@ -40,7 +40,7 @@ export function ResourceContact({ title, text }: { title: string; text: ReactNod
       text={text}
       actions={
         <>
-          <ButtonLink to={contactHref()}>Book My Evaluation</ButtonLink>
+          <ButtonLink to={CONTACT_HREF}>Contact Stride</ButtonLink>
           <ButtonLink to={CONTACT_QUESTION_HREF} variant="outline" arrow={false}>
             Contact Stride
           </ButtonLink>

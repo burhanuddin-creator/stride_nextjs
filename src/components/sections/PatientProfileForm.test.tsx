@@ -162,7 +162,8 @@ describe('Schedule an Appointment page', () => {
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Schedule an Appointment' })).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
-    expect(await screen.findByRole('button', { name: /Book Appointment/ })).toBeInTheDocument();
+    expect(await screen.findByRole('list', { name: 'Booking steps' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Create Patient Profile/ })).not.toBeInTheDocument();
   });
 

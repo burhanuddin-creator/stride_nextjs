@@ -131,9 +131,24 @@ test('desktop navigation shows the active page', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
 });
 
-test('appointment CTA with care context preselects and focuses the form section', async ({ page }) => {
+test('Contact Stride on a condition page opens the Contact page', async ({ page }) => {
   await page.goto('/what-we-treat/arthritis');
-  await page.getByRole('link', { name: 'Book My Evaluation about Arthritis' }).first().click();
+  await page.getByRole('main').getByRole('link', { name: 'Contact Stride' }).first().click();
+  await expect(page).toHaveURL(/\/contact$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Contact Stride');
+});
+
+test('header: "Schedule an Appointment" opens online booking on desktop and mobile', async ({ page }, testInfo) => {
+  await page.goto('/');
+  await expect(page.getByRole('banner').getByText(/Book My Evaluation/i)).toHaveCount(0);
+  if (testInfo.project.name === 'mobile') await page.getByRole('button', { name: 'Menu' }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'Schedule an Appointment' }).filter({ visible: true }).click();
+  await expect(page).toHaveURL(/\/contact\/schedule-appointment$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Schedule an Appointment');
+});
+
+test('a contact link with care context preselects and focuses the form section', async ({ page }) => {
+  await page.goto('/contact?care=physical_therapy&topic=arthritis#request-form');
   await expect(page).toHaveURL(/\/contact\?care=physical_therapy&topic=arthritis#request-form$/);
   await expect(page.getByLabel(/What can we help you with/)).toHaveValue('physical_therapy');
   await expect(page.getByLabel(/What can we help you with/).locator('option[value="wellness"]')).toHaveCount(0);
@@ -527,38 +542,47 @@ test('appointment form requires a valid phone separately from email', async ({ p
   await expect(page.getByRole('heading', { name: 'Demo complete. This request was not sent.' })).toBeFocused();
 });
 
-test('Schedule an Appointment: one booking form from Contact (demo), validation, nothing in URL or storage', async ({ page }) => {
-  // After client navigation Next.js keeps the Contact page mounted but hidden (Activity), so field lookups by label
-  // are limited to visible elements.
+/** First day with demo times (the first month can be empty near its end). */
+async function firstAvailableDay(page: Page) {
+  const calendar = page.getByRole('table');
+  await expect(calendar.or(page.getByText(/No times this month/))).toBeVisible();
+  let day = calendar.getByRole('button', { name: /, \d+ times? available/ }).first();
+  if ((await day.count()) === 0) {
+    await page.getByRole('button', { name: 'Next month' }).click();
+    day = page.getByRole('table').getByRole('button', { name: /, \d+ times? available/ }).first();
+  }
+  return day;
+}
+
+test('Schedule an Appointment: three steps from Contact (demo), per-step validation, nothing in URL or storage', async ({ page }) => {
+  // After client navigation Next.js keeps the Contact page mounted but hidden (Activity), so lookups are limited to
+  // visible elements.
   await page.goto('/contact');
-  await page.getByRole('link', { name: 'Schedule an Appointment' }).click();
+  await page.getByRole('main').getByRole('link', { name: 'Schedule an Appointment' }).filter({ visible: true }).click();
   await expect(page).toHaveURL(/\/contact\/schedule-appointment$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Schedule an Appointment');
   await expect(page.getByText('sample times only', { exact: false })).toBeVisible(); // demo build
-  await expect(page.getByRole('button', { name: /Continue/ })).toHaveCount(0);
+  const summary = page.getByRole('complementary', { name: 'Your appointment' });
+  await expect(summary).toContainText('Initial Evaluation');
+  await expect(summary).toContainText(/Central Time \(C[DS]T\)/);
+  await expect(page.getByRole('heading', { name: /^Step 1 of 3/ })).toBeVisible();
 
-  await page.getByRole('button', { name: /Book Appointment/ }).click();
-  await expect(page.getByRole('alert').filter({ hasText: 'Please fix' })).toBeFocused();
-
-  // Appointment: provider info on click, a real (demo) day and time in clinic time, payment.
-  await page.getByRole('button', { name: 'About this provider' }).click();
+  // Step 1: Continue without a time → focused error, still on step 1.
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.getByRole('alert').filter({ hasText: 'Choose a date, then a time.' })).toBeFocused();
+  await summary.getByRole('button', { name: 'About this provider' }).click();
   await expect(page.getByText(/is the provider who sees new patients/)).toBeVisible();
-  await expect(page.getByText(/Central Time/).first()).toBeVisible();
-  const dateField = page.getByRole('button', { name: /^Date:/ });
-  await dateField.click();
-  await expect(page.getByRole('dialog', { name: 'Choose a date' })).toBeVisible();
-  let day = page.getByRole('button', { name: /, \d+ times? available/ }).first();
-  if ((await day.count()) === 0) {
-    await page.getByRole('button', { name: 'Next month' }).click();
-    day = page.getByRole('button', { name: /, \d+ times? available/ }).first();
-  }
-  await day.click();
-  await page.getByRole('group', { name: /Available times on/ }).getByRole('radio').first().check();
-  await expect(page.getByText(/Selected:/)).toBeVisible();
-  await page.getByRole('radio', { name: 'Insurance' }).check();
-  await expect(page.getByText(/does not check your eligibility or guarantee coverage/)).toBeVisible();
+  await (await firstAvailableDay(page)).click();
+  const time = page.getByRole('group', { name: /Available times/ }).getByRole('radio').first();
+  const timeLabel = (await time.locator('xpath=..').innerText()).trim();
+  await time.check();
+  await expect(summary).toContainText(timeLabel);
+  await page.getByRole('button', { name: 'Continue' }).click();
 
-  // Patient details.
+  // Step 2: details, validated before step 3.
+  await expect(page.getByRole('heading', { name: /^Step 2 of 3/ })).toBeFocused();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.getByRole('alert').filter({ hasText: 'Please fix these 6 problems' })).toBeFocused();
   await page.getByLabel(/First name/).filter({ visible: true }).fill('Jamie');
   await page.getByLabel(/Last name/).filter({ visible: true }).fill('Rivera');
   await page.getByLabel('Month', { exact: true }).filter({ visible: true }).selectOption({ label: 'April' });
@@ -567,8 +591,18 @@ test('Schedule an Appointment: one booking form from Contact (demo), validation,
   await page.getByLabel(/^Sex/).filter({ visible: true }).selectOption({ label: 'Female' });
   await page.getByLabel(/US mobile number/).filter({ visible: true }).fill('630.555.0123');
   await page.getByLabel(/Email address/).filter({ visible: true }).fill('jamie.rivera@example.test');
+  await page.getByRole('button', { name: 'Continue' }).click();
+
+  // Step 3: payment, consent, review; Back keeps the answers.
+  await expect(page.getByRole('heading', { name: /^Step 3 of 3/ })).toBeFocused();
+  await page.getByRole('button', { name: 'Back' }).click();
+  await expect(page.getByLabel(/First name/).filter({ visible: true })).toHaveValue('Jamie');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.getByRole('region', { name: 'Review your booking' })).toContainText(`at ${timeLabel}`);
+  await page.getByRole('radio', { name: 'Insurance' }).check();
+  await expect(page.getByText(/does not check your eligibility or guarantee coverage/)).toBeVisible();
   await page.getByLabel(/book this appointment/).filter({ visible: true }).check();
-  await page.getByRole('button', { name: /Book Appointment/ }).click();
+  await page.getByRole('button', { name: /^Confirm Appointment/ }).click();
 
   await expect(page.getByRole('heading', { name: 'Demo complete. Nothing was booked.' })).toBeFocused();
   await expect(page.getByText(/1131 Fairview Ave/).first()).toBeVisible();
@@ -577,14 +611,64 @@ test('Schedule an Appointment: one booking form from Contact (demo), validation,
   expect(stored).not.toMatch(/Jamie|jamie.rivera|1985/);
 });
 
-test('Schedule an Appointment page has no horizontal overflow at 320px and survives a direct load', async ({ page }) => {
+test('Schedule an Appointment layout: summary beside the steps on desktop, one column on mobile, no overflow', async ({ page }, testInfo) => {
+  await page.goto('/contact/schedule-appointment');
+  const summary = page.getByRole('complementary', { name: 'Your appointment' });
+  const form = page.locator('form').filter({ has: page.getByRole('heading', { name: /^Step 1 of 3/ }) });
+  await expect(summary).toBeVisible();
+  const [formBox, summaryBox] = [await form.boundingBox(), await summary.boundingBox()];
+  if (testInfo.project.name === 'desktop') {
+    expect(summaryBox!.x).toBeGreaterThan(formBox!.x + formBox!.width); // beside
+    expect(summaryBox!.y).toBeLessThan(formBox!.y + 200);
+  } else {
+    expect(summaryBox!.y).toBeGreaterThan(formBox!.y + formBox!.height - 1); // below, one column
+  }
+  // Time slots and controls are comfortable touch targets.
+  await (await firstAvailableDay(page)).click();
+  for (const box of [
+    await page.getByRole('group', { name: /Available times/ }).locator('label').first().boundingBox(),
+    await page.getByRole('button', { name: 'Continue' }).boundingBox(),
+    await page.getByRole('button', { name: 'Next month' }).boundingBox(),
+  ]) {
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+  }
+  expect(await horizontalOverflow(page)).toEqual([]);
+});
+
+test('Schedule an Appointment page has no horizontal overflow at 320px on every step and survives a direct load', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto('/contact/schedule-appointment');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Schedule an Appointment');
-  await expect(page.getByText('Loading available times…')).toHaveCount(0);
-  await page.getByRole('button', { name: /^Date:/ }).click(); // the small calendar popup fits too
   await expect(page.getByRole('button', { name: 'Next month' })).toBeVisible();
   expect(await horizontalOverflow(page)).toEqual([]);
+  await (await firstAvailableDay(page)).click();
+  await page.getByRole('group', { name: /Available times/ }).getByRole('radio').first().check();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.getByRole('heading', { name: /^Step 2 of 3/ })).toBeVisible();
+  expect(await horizontalOverflow(page)).toEqual([]);
+});
+
+test('Schedule an Appointment is keyboard operable: calendar arrows, time radios, Enter continues', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'keyboard path once');
+  await page.goto('/contact/schedule-appointment');
+  const day = await firstAvailableDay(page);
+  await day.focus();
+  await page.keyboard.press('ArrowRight');
+  const focused = page.locator('table button:focus');
+  await expect(focused).toHaveAttribute('aria-label', /times? available/);
+  await page.keyboard.press('Enter');
+  await expect(focused).toHaveAttribute('aria-pressed', 'true');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('group', { name: /Available times/ }).getByRole('radio').first()).toBeFocused();
+  // Visible focus on the time button.
+  const outline = await page.getByRole('group', { name: /Available times/ }).locator('label').first().evaluate((el) => getComputedStyle(el).outlineStyle);
+  expect(outline).toBe('solid');
+  await page.keyboard.press('Space');
+  await page.getByRole('button', { name: 'Continue' }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('heading', { name: /^Step 2 of 3/ })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByLabel(/First name/)).toBeFocused();
 });
 
 test('Home hero slider: welcome first, poster second, accessible controls, no movement under reduced motion', async ({ browser }, testInfo) => {
@@ -620,7 +704,7 @@ test('Home hero slider: welcome first, poster second, accessible controls, no mo
 
     await slider.getByRole('button', { name: 'Previous slide' }).click();
     await expect(welcome).not.toHaveAttribute('inert', '');
-    await expect(page.getByRole('link', { name: 'Book My Evaluation' }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Contact Stride' }).first()).toBeVisible();
     await context.close();
   }
 });

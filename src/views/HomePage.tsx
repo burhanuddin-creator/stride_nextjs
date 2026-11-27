@@ -15,7 +15,7 @@ import { HOME_ACTIVITY_TABS, HOME_DIFFERENCE, HOME_FAQS, HOME_FEATURED_SERVICES,
 import { media } from '../data/media';
 import { PATIENT_RESOURCES_HREF, resourceHref } from '../data/resources';
 import { SERVICES_INDEX_HREF, serviceHref } from '../data/services';
-import { ABOUT_HREF, contactHref } from '../utils/links';
+import { ABOUT_HREF, CONTACT_HREF } from '../utils/links';
 import { TealHero } from '../components/blocks/TealHero';
 import { ActivityTabs } from '../components/home/ActivityTabs';
 import { HomeActionsFlag } from '../components/home/HomeActionsFlag';
@@ -45,7 +45,7 @@ function HomeTextLink({ to, children, external }: { to: string; children: string
  * Home page from the Home page developer package (design-reference/Stride_Home_Page_Developer_Package/), built from
  * the site's shared components: hero slider (teal hero, Coming Soon poster) → everyday-goal tabs → the Stride difference → featured services →
  * getting-started questions → sand appointment band → location, plus a booking/directions bar below 720px.
- * Booking actions open the real appointment form (contactHref()).
+ * "Contact Stride" actions open the Contact page (CONTACT_HREF); the header links to online booking.
  */
 export default function HomePage() {
   return (
@@ -69,8 +69,8 @@ export default function HomePage() {
                 fill
                 actions={
                   <>
-                    <ButtonLink to={contactHref()} variant="clay">
-                      Book My Evaluation
+                    <ButtonLink to={CONTACT_HREF} variant="clay">
+                      Contact Stride
                     </ButtonLink>
                     <ButtonLink to={WHAT_WE_TREAT_HREF} variant="ghost" arrow={false}>
                       Explore What We Treat
@@ -226,7 +226,7 @@ export default function HomePage() {
             what matters to you.
           </h2>
           <p className={styles.startText}>Tell us what feels difficult and what you want to get back to. We’ll help you take the next step.</p>
-          <ButtonLink to={contactHref()}>Book My Evaluation</ButtonLink>
+          <ButtonLink to={CONTACT_HREF}>Contact Stride</ButtonLink>
           <a className={styles.startEmail} href={emailHref}>
             Have a question first? Email us <span aria-hidden="true">↗</span>
           </a>
@@ -291,8 +291,8 @@ export default function HomePage() {
 
       {/* Below 720px: booking and directions stay within reach. */}
       <nav className={styles.mobileActions} aria-label="Quick clinic actions">
-        <Link href={contactHref()}>
-          Book My Evaluation <span aria-hidden="true">→</span>
+        <Link href={CONTACT_HREF}>
+          Contact Stride <span aria-hidden="true">→</span>
         </Link>
         <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
           Directions <span aria-hidden="true">↗</span>

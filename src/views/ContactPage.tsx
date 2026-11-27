@@ -26,7 +26,7 @@ export default function ContactPage() {
         actions={
           <>
             <ButtonLink to={`#${CONTACT_FORM_ID}`} variant="clay">
-              Book My Evaluation
+              Contact Stride
             </ButtonLink>
             <ButtonLink to={SCHEDULE_APPOINTMENT_PATH} variant="light">
               Schedule an Appointment
@@ -94,7 +94,7 @@ export default function ContactPage() {
           <section id={CONTACT_FORM_ID} className={styles.formPanel} aria-labelledby="form-title">
             <Eyebrow>Your first step</Eyebrow>
             <h2 id="form-title" className={styles.title}>
-              Book my evaluation.
+              Contact Stride.
             </h2>
             <p className={styles.formIntro}>
               Share your contact preferences so the team can follow up about scheduling. An appointment is confirmed only after you receive confirmation from

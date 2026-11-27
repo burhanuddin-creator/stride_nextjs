@@ -3,7 +3,7 @@ import { conditionHref } from '../../data/conditions';
 import { portrait } from '../../data/media';
 import { resourceHref } from '../../data/resources';
 import { serviceHref } from '../../data/services';
-import { ABOUT_HREF, contactHref } from '../../utils/links';
+import { ABOUT_HREF, CONTACT_HREF } from '../../utils/links';
 import { ApproachTabs } from '../../components/about/ApproachTabs';
 import { Band } from '../../components/blocks/Blocks';
 import { DisclosureList } from '../../components/blocks/Disclosure';
@@ -72,8 +72,8 @@ export default function MeetDrGadlyPage() {
         text="Get to know the physical therapist behind Stride’s approach to personal, practical care."
         actions={
           <>
-            <ButtonLink to={contactHref()} variant="clay">
-              Book My Evaluation
+            <ButtonLink to={CONTACT_HREF} variant="clay">
+              Contact Stride
             </ButtonLink>
             <ButtonLink to={ABOUT_HREF} variant="ghost">
               Our Story
