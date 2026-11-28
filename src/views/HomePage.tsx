@@ -67,6 +67,7 @@ export default function HomePage() {
                 imagePosition="60% center"
                 mobileImage="below"
                 fill
+                compactMobile
                 actions={
                   <>
                     <ButtonLink to={CONTACT_HREF} variant="clay">
@@ -94,9 +95,8 @@ export default function HomePage() {
                   sizes="100vw"
                 />
                 {/* Below 900px the wide poster would be too small to read, so the slide is rebuilt from its parts: the
-                    poster's text-free clinic photo with the same words as real text. */}
+                    same words as real text, then the poster's text-free clinic photo below them. */}
                 <div className={styles.posterMobile}>
-                  <Photo image={media('coming-soon-westmont-photo', '')} className={styles.posterPhoto} sizes="100vw" />
                   <div className={`container ${styles.posterCopy}`}>
                     {/* The poster's own wording (brand-assets/posters/coming-soon-westmont.png), not site.name. */}
                     <p className={styles.posterEyebrow}>Stride Physical Therapy</p>
@@ -104,6 +104,12 @@ export default function HomePage() {
                     <p className={styles.posterSoon}>Coming Soon to Westmont</p>
                     <p className={styles.posterTagline}>Care that starts with you.</p>
                   </div>
+                  <Photo
+                    image={media('coming-soon-westmont-photo', '')}
+                    className={styles.posterPhoto}
+                    position="72% 74%"
+                    sizes="(max-width: 899px) 100vw, 1px"
+                  />
                 </div>
               </div>
             ),

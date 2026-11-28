@@ -491,7 +491,7 @@ for (const [name, width, height] of HOME_VIEWPORTS) {
   });
 }
 
-test('hero order: Home text first and image below on mobile; desktop unchanged; Services keeps its image above', async ({ page }, testInfo) => {
+test('hero: Home is copy-only and compact on mobile; desktop unchanged; Services keeps its image above', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'runs once and sets its own viewport');
   const heroBoxes = async (path: string) => {
     await page.goto(path);
@@ -502,17 +502,13 @@ test('hero order: Home text first and image below on mobile; desktop unchanged; 
     return { h1, img, actions };
   };
 
+  // Home on mobile: the welcome slide shows copy and buttons only, so the slider stays as compact as the poster slide.
   await page.setViewportSize({ width: 390, height: 844 });
-  const home = await heroBoxes('/');
-  expect(home.img.y).toBeGreaterThanOrEqual(home.actions.y + home.actions.height); // image after the text and buttons
-  expect(home.img.width).toBeGreaterThan(350);
-  const order = await page.evaluate(() => {
-    const hero = document.querySelector('section[aria-labelledby="page-title"]')!;
-    const h1 = hero.querySelector('h1')!;
-    const img = hero.querySelector('img')!;
-    return Boolean(h1.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_FOLLOWING);
-  });
-  expect(order).toBe(true); // reading order matches: text, then image
+  await page.goto('/');
+  const homeHero = page.locator('section[aria-labelledby="page-title"]');
+  await expect(homeHero.locator('img').first()).toBeHidden();
+  await expect(homeHero.getByRole('link', { name: 'Contact Stride' })).toBeVisible();
+  expect((await homeHero.boundingBox())!.height).toBeLessThan(520);
 
   const services = await heroBoxes('/services');
   expect(services.img.y + services.img.height).toBeLessThanOrEqual(services.h1.y + 1); // other pages: image above
@@ -699,6 +695,19 @@ test('Home hero slider: welcome first, poster second, accessible controls, no mo
     } else {
       await expect(poster.getByText('Coming Soon to Westmont', { exact: true })).toBeVisible();
       await expect(poster.getByText('Your next chapter in movement.')).toBeVisible();
+      // Compact and consistent: both slides share one height, the photo sits below the words (never under them), and
+      // the controls have their own strip below the slides instead of covering the photo.
+      // (The welcome slide is aria-hidden while the poster shows, so it is located by attribute, not by role.)
+      const welcomeSlide = page.locator('[aria-roledescription="slide"]').first();
+      const [welcomeBox, posterBox, sliderBox] = [await welcomeSlide.boundingBox(), await poster.boundingBox(), await slider.boundingBox()];
+      expect(Math.abs(welcomeBox!.height - posterBox!.height)).toBeLessThanOrEqual(1);
+      expect(sliderBox!.height).toBeLessThan(560);
+      const tagline = (await poster.getByText('Care that starts with you.').boundingBox())!;
+      const photo = (await poster.locator('img').filter({ visible: true }).boundingBox())!;
+      expect(photo.y).toBeGreaterThanOrEqual(tagline.y + tagline.height);
+      expect(photo.height).toBeGreaterThan(150);
+      const next = (await slider.getByRole('button', { name: 'Next slide' }).boundingBox())!;
+      expect(next.y).toBeGreaterThanOrEqual(posterBox!.y + posterBox!.height - 1);
     }
     expect(await horizontalOverflow(page)).toEqual([]);
 

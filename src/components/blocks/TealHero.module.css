@@ -150,6 +150,17 @@
   .imageBelow .media::after {
     background: linear-gradient(180deg, var(--color-surface-dark) 0%, rgb(17 59 64 / 0%) 35%);
   }
+
+  /* Home hero slider: copy and actions only, so every slide stays compact (no photo strip, no lone "Home" crumb). */
+  .compactMobile .media,
+  .compactMobile .crumbs {
+    display: none;
+  }
+
+  .compactMobile.withImage .inner,
+  .compactMobile .inner {
+    padding-block: 1.75rem 1.5rem;
+  }
 }
 
 @media (max-width: 479px) {

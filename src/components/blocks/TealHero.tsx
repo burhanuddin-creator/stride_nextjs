@@ -55,6 +55,11 @@ interface Props {
    * vertically centred on desktop.
    */
   fill?: boolean;
+  /**
+   * Below 900px show only the copy and actions: no photo strip and no breadcrumb (Home hero slider, which must stay
+   * as compact as its other slides). Desktop is unchanged.
+   */
+  compactMobile?: boolean;
 }
 
 /**
@@ -62,18 +67,32 @@ interface Props {
  * service, condition, resource, about and contact pages; with a faded photo on the Services and Patient Resources
  * overviews.
  */
-export function TealHero({ crumbs, title, tagline, text, actions, image, imagePosition, mobileImage = 'above', aside, fill }: Props) {
+export function TealHero({ crumbs, title, tagline, text, actions, image, imagePosition, mobileImage = 'above', aside, fill, compactMobile }: Props) {
   const below = mobileImage === 'below';
   // The photo is absolutely positioned on desktop, so its place in the markup only matters once the hero stacks:
-  // there it also gives text-first reading order when it comes after the copy.
+  // there it also gives text-first reading order when it comes after the copy. When it is hidden on small screens,
+  // `sizes` lets those screens fetch only the smallest candidate.
   const media = image && (
     <div className={styles.media}>
-      <Photo image={image} position={imagePosition} priority sizes="(min-width: 900px) 58vw, 100vw" className={styles.photo} />
+      <Photo
+        image={image}
+        position={imagePosition}
+        priority
+        sizes={compactMobile ? '(min-width: 900px) 58vw, 1px' : '(min-width: 900px) 58vw, 100vw'}
+        className={styles.photo}
+      />
     </div>
   );
   return (
     <section
-      className={[styles.hero, image ? styles.withImage : '', image && below ? styles.imageBelow : '', aside ? styles.withAside : '', fill ? styles.fill : ''].join(' ')}
+      className={[
+        styles.hero,
+        image ? styles.withImage : '',
+        image && below ? styles.imageBelow : '',
+        aside ? styles.withAside : '',
+        fill ? styles.fill : '',
+        compactMobile ? styles.compactMobile : '',
+      ].join(' ')}
       data-surface="dark"
       aria-labelledby="page-title"
     >

@@ -24,42 +24,42 @@
   display: none;
 }
 
-/* Below 900px the wide poster would be too small to read: the slide shows the poster's text-free clinic photo with
-   the same words as real text, in the poster's colours (cream, gold rules, serif), copy first like the welcome slide. */
+/* Below 900px the wide poster would be too small to read: the slide is rebuilt from its parts in the poster's colours
+   (cream, gold rules, serif) — a compact block of real text on the poster's deep teal, then the poster's text-free
+   clinic photo in the remaining height. The photo is cropped (never stretched) around the treatment table; with no
+   fixed height, the slide is exactly as tall as the welcome slide beside it, so there are no blank areas. */
 @media (max-width: 899px) {
   .posterImage {
     display: none;
   }
 
   .posterMobile {
-    position: relative;
     display: flex;
+    flex-direction: column;
     height: 100%;
-    min-height: 34rem;
+    background: #0e3337;
   }
 
   .posterPhoto {
-    position: absolute;
-    inset: 0;
+    flex: 1 1 auto;
+    min-height: 10rem;
   }
 
   .posterPhoto img {
-    object-position: 62% bottom;
-  }
-
-  /* Deep teal behind the words, clearing towards the photo below (as on the poster's left edge). */
-  .posterMobile::before {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    background: linear-gradient(180deg, #0e3337 0%, rgb(14 51 55 / 94%) 42%, rgb(14 51 55 / 55%) 62%, rgb(14 51 55 / 0%) 82%);
+  }
+
+  /* Blends the photo's top edge into the teal above it, as on the poster. */
+  .posterPhoto::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #0e3337 0%, rgb(14 51 55 / 0%) 30%);
     content: '';
   }
 
   .posterCopy {
-    position: relative;
-    z-index: 2;
-    padding-block: 2.5rem 1.5rem;
+    padding-block: 1.75rem 1.25rem;
     color: #f7f0e3;
     font-family: Georgia, 'Times New Roman', serif;
   }
@@ -72,7 +72,7 @@
   }
 
   .posterEyebrow {
-    padding-bottom: 1rem;
+    padding-bottom: 0.85rem;
     border-bottom: 1px solid rgb(212 176 106 / 75%);
     font-family: var(--font-body);
     font-size: 0.72rem;
@@ -82,7 +82,7 @@
   }
 
   .posterTitle {
-    margin-top: 1.25rem;
+    margin-top: 1rem;
     font-size: clamp(2.25rem, 1.4rem + 4vw, 3.25rem);
     line-height: 1.04;
     letter-spacing: -0.01em;
@@ -97,8 +97,8 @@
   }
 
   .posterTagline {
-    margin-top: 0.75rem;
-    padding-bottom: 1.25rem;
+    margin-top: 0.6rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid rgb(212 176 106 / 75%);
     font-size: 1.1rem;
     font-style: italic;

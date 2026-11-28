@@ -91,6 +91,24 @@
   }
 }
 
+/* Small screens: the controls get their own strip below the slides (the hero's teal), so they never cover the copy,
+   the buttons or the photo, and the slides stay free of reserved blank space. */
+@media (max-width: 899px) {
+  .slider {
+    padding-bottom: 0.5rem;
+    background: var(--color-surface-dark);
+  }
+
+  .controls {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: max-content;
+    margin: 0.25rem auto 0;
+    transform: none;
+  }
+}
+
 .dots {
   display: flex;
 }
